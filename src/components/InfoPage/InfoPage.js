@@ -12,13 +12,15 @@ class InfoPage extends Component {
   constructor(){
     super();
     this.state = {
-      itemArr: []
+      itemArr: [],
+      countArr: []
     }
   }
 
   componentDidMount() {
     this.props.dispatch({type: USER_ACTIONS.FETCH_USER});
     this.getItems();
+    this.getCount();
   }
 
   componentDidUpdate() {
@@ -35,6 +37,16 @@ class InfoPage extends Component {
           itemArr: response.data
         })
         console.log(this.state.itemArr);
+      })
+  }
+  getCount = () => {
+    axios.get('api/shelf/count')
+      .then((response) => {
+        console.log('in the axios GET call', response.data);
+        this.setState({
+          countArr: response.data
+        })
+        console.log(this.state.countArr);
       })
   }
 
@@ -66,6 +78,9 @@ class InfoPage extends Component {
         { content }
         {this.state.itemArr.map((item, i) => <div key={i}><img alt="items" src={item.image_url} /><p>{item.description}</p><br/><button onClick={() => this.deleteItem(item.id)}>Delete</button></div>
         )}
+
+        {this.state.countArr.map((person, i) => <div key={i}><p>{person.name}, has <h3>{person.count}</h3> item(s) on the shelf:</p><p>{person.description}</p></div>)}
+
       </div>
     );
   }

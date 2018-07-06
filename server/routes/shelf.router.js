@@ -81,9 +81,11 @@ router.put('/:id', (req, res) => {
  * they have added to the shelf
  */
 router.get('/count', (req, res) => {
-    let queryText = `SELECT person.id AS userid, count(item.id) AS count, array_agg(item.description) AS description FROM person
+    console.log('in get count');
+    let queryText = `SELECT person.username AS name, person.id AS userid, count(item.id) AS count, array_agg(item.description) AS description FROM person
     LEFT JOIN item ON person_id = person.id
     GROUP BY person.id;`;
+    console.log(queryText);
     pool.query(queryText).then((result) => {
         res.send(result.rows);
     }).catch((error) => {
