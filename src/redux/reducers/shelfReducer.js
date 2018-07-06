@@ -2,6 +2,7 @@ import { combineReducers } from 'redux';
 import axios from 'axios';
 
 const shelf = (state = [], action) => {
+    console.log('in shelf reducers');
     if(action.type === 'ADD_SPICE') {
         state = [...state, action.payload];
     } else if(action.type === 'GET_SPICES') {

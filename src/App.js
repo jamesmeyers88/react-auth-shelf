@@ -37,6 +37,10 @@ const App = () => (
           path="/shelf"
           component={InfoPage}
         />
+        <Route
+          path="/form"
+          component={AddForm}
+        />
       </Switch>
     </Router>
   </div>
