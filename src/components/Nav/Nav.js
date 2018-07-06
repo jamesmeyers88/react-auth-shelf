@@ -15,6 +15,11 @@ const Nav = () => (
             The Shelf
           </Link>
         </li>
+        <li>
+          <Link to="/form">
+            Spice up your life!
+          </Link>
+        </li>
       </ul>
     </div>
   </div>
