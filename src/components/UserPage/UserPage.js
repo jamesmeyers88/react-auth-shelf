@@ -26,6 +26,8 @@ class UserPage extends Component {
     // this.props.history.push('home');
   }
 
+
+  
   render() {
     let content = null;
 
