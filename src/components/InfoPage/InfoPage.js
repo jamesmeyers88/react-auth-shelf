@@ -25,9 +25,8 @@ class InfoPage extends Component {
     if (this.props.user.userName) {
       content = (
         <div>
-          <p>
-            Info Page
-          </p>
+          <h1> Welcome to the Shelf!</h1>
+        
         </div>
       );
     }

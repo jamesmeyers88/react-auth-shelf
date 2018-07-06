@@ -33,7 +33,7 @@ const App = () => (
           component={UserPage}
         />
         <Route
-          path="/info"
+          path="/shelf"
           component={InfoPage}
         />
       </Switch>
