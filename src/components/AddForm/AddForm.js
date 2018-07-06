@@ -30,11 +30,12 @@ class AddForm extends Component {
   }
 
   handleSpice = (key) => (event) => {
-    console.log('Youre handling giner spice')
+    console.log('Youre handling ginger spice')
     this.setState({
         newSpice: {
             ...this.state.newSpice,
-            [key]: event.target.value
+            [key]: event.target.value,
+            person_id: this.props.user.userName
         }
     })
   }
@@ -46,7 +47,8 @@ class AddForm extends Component {
       this.setState({
             newSpice: {
                 image_url: '',
-                description: ''
+                description: '',
+                person_id: ''
             }
       })
   }
@@ -59,7 +61,7 @@ class AddForm extends Component {
         <div>
             <h1>Spice up your life!</h1>
             <form onSubmit={this.addSpice}>
-                <input type="text" value={this.state.newSpice.image_url} onChange={this.handleSpice('image')} placeholder="img URL"/>
+                <input type="text" value={this.state.newSpice.image_url} onChange={this.handleSpice('image_url')} placeholder="img URL"/>
                 <input type="text" value={this.state.newSpice.description} onChange={this.handleSpice('description')} placeholder="brief description"/>
                 <input type="submit" value="Get Spicy!"/>
             </form>
