@@ -9,6 +9,16 @@ const mapStateToProps = state => ({
 });
 
 class AddForm extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      newSpice: {
+        image_url: '',
+        description: '',
+        person_id: ''
+    }
+    }
+  }
   componentDidMount() {
     this.props.dispatch({type: USER_ACTIONS.FETCH_USER});
   }
@@ -19,19 +29,12 @@ class AddForm extends Component {
     }
   }
 
-  state = {
-      newSpice: {
-          name: '',
-          image: '',
-          description: '',
-      }
-  }
-
   handleSpice = (key) => (event) => {
     this.setState({
         newSpice: {
             ...this.state.newSpice,
-            [key]: event.target.value
+            [key]: event.target.value,
+            person_id: this.props.user.userName
         }
     })
   }
@@ -41,9 +44,9 @@ class AddForm extends Component {
       this.props.dispatch({ type: 'ADD_SPICE', payload: this.state.newSpice});
       this.setState({
             newSpice: {
-                name: '',
-                image: '',
+                image_url: '',
                 description: '',
+                person_id: ''
             }
       })
   }
@@ -56,8 +59,7 @@ class AddForm extends Component {
         <div>
             <h1>Spice up your life!</h1>
             <form onSubmit={this.addSpice}>
-                <input type="text" value={this.state.newSpice.name} onChange={this.handleSpice('name')} placeholder="spice name"/>
-                <input type="text" value={this.state.newSpice.image} onChange={this.handleSpice('image')} placeholder="img URL"/>
+                <input type="text" value={this.state.newSpice.image_url} onChange={this.handleSpice('image_url')} placeholder="img URL"/>
                 <input type="text" value={this.state.newSpice.description} onChange={this.handleSpice('description')} placeholder="brief description"/>
                 <input type="submit" value="Get Spicy!"/>
             </form>

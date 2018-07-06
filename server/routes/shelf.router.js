@@ -27,7 +27,7 @@ router.post('/', (req, res) => {
     console.log('req.body in router:', req.body);
     const queryText = `INSERT INTO item (description, image_url, person_id)
     Values ($1, $2, $3);`;
-    pool.query(queryText, [req.body.description, req.body.image, req.body.person_id])
+    pool.query(queryText, [req.body.description, req.body.image_url, req.body.person_id])
         .then((result) => {
             res.sendStatus(201);
         })
