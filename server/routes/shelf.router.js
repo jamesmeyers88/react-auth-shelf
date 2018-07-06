@@ -42,10 +42,11 @@ router.post('/', (req, res) => {
  * Delete an item if it's something the logged in user added
  */
 router.delete('/:id', (req, res) => {
+    const id = req.params.id;
     if (req.isAuthenticated()){
-        let queryText = `SELECT * FROM item by id desc;`;
-        pool.query(queryText).then((result) => {
-            res.send(result.rows);
+        let queryText = `DELETE FROM item WHERE id = $1`;
+        pool.query(queryText, [id]).then((result) => {
+            res.sendStatus(200);
         }).catch((error) => {
             console.log(error);
             res.sendStatus(500);
@@ -60,9 +61,10 @@ router.delete('/:id', (req, res) => {
  * Update an item if it's something the logged in user added
  */
 router.put('/:id', (req, res) => {
+    const id = req.params.id;
     if (req.isAuthenticated()){
         let queryText = `UPDATE item SET description = $1, image_url = $2, person_id = $3 WHERE id = $4;`;
-        pool.query(queryText, [req.body.description, req.body.image, req.body.person_id, req.body.item.id]).then((result) => {
+        pool.query(queryText, [req.body.description, req.body.image, req.body.person_id, id]).then((result) => {
             res.send(result.rows);
         }).catch((error) => {
             console.log(error);
@@ -79,7 +81,14 @@ router.put('/:id', (req, res) => {
  * they have added to the shelf
  */
 router.get('/count', (req, res) => {
-
+    let queryText = `SELECT person.id AS userid, count(item.id) AS count, array_agg(item.description) AS description FROM person
+    LEFT JOIN item ON person_id = person.id
+    GROUP BY person.id;`;
+    pool.query(queryText).then((result) => {
+        res.send(result.rows);
+    }).catch((error) => {
+        res.sendStatus(500);
+    })
 });
 
 
@@ -87,7 +96,13 @@ router.get('/count', (req, res) => {
  * Return a specific item by id
  */
 router.get('/:id', (req, res) => {
-
+    const id = req.params.id;
+    let queryText = `SELECT * FROM item WHERE id = $1;`;
+    pool.query(queryText, [id]).then((result) => {
+        res.send(result.rows);
+    }).catch((error) => {
+        res.sendStatus(500);
+    })
 });
 
 module.exports = router;
