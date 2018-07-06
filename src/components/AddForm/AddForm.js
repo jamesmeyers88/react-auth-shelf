@@ -30,7 +30,6 @@ class AddForm extends Component {
   }
 
   handleSpice = (key) => (event) => {
-    console.log('Youre handling ginger spice')
     this.setState({
         newSpice: {
             ...this.state.newSpice,
@@ -41,8 +40,7 @@ class AddForm extends Component {
   }
 
   addSpice = (event) => {
-      console.log('Youre adding baby spice');
-      event.preventDefault();
+  event.preventDefault();
       this.props.dispatch({ type: 'ADD_SPICE', payload: this.state.newSpice});
       this.setState({
             newSpice: {
